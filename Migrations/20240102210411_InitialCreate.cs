@@ -11,21 +11,6 @@ namespace HillarysHairCare.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Appointments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    StylistId = table.Column<int>(type: "integer", nullable: false),
-                    CustomerId = table.Column<int>(type: "integer", nullable: false),
-                    ApptTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AppointmentServices",
                 columns: table => new
                 {
@@ -65,6 +50,33 @@ namespace HillarysHairCare.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stylists", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    StylistId = table.Column<int>(type: "integer", nullable: false),
+                    CustomerId = table.Column<int>(type: "integer", nullable: false),
+                    ApptTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Stylists_StylistId",
+                        column: x => x.StylistId,
+                        principalTable: "Stylists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,23 +124,6 @@ namespace HillarysHairCare.Migrations
                     { 18, 10, 1 },
                     { 19, 10, 1 },
                     { 20, 11, 7 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Appointments",
-                columns: new[] { "Id", "ApptTime", "CustomerId", "StylistId" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2024, 1, 15, 9, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
-                    { 2, new DateTime(2024, 1, 16, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, 2 },
-                    { 3, new DateTime(2024, 1, 17, 14, 0, 0, 0, DateTimeKind.Unspecified), 3, 3 },
-                    { 4, new DateTime(2024, 1, 17, 11, 0, 0, 0, DateTimeKind.Unspecified), 4, 4 },
-                    { 5, new DateTime(2024, 1, 5, 13, 0, 0, 0, DateTimeKind.Unspecified), 5, 5 },
-                    { 6, new DateTime(2024, 1, 6, 16, 0, 0, 0, DateTimeKind.Unspecified), 6, 6 },
-                    { 7, new DateTime(2024, 1, 8, 14, 0, 0, 0, DateTimeKind.Unspecified), 7, 7 },
-                    { 8, new DateTime(2024, 1, 10, 9, 0, 0, 0, DateTimeKind.Unspecified), 8, 8 },
-                    { 9, new DateTime(2024, 1, 11, 10, 0, 0, 0, DateTimeKind.Unspecified), 9, 9 },
-                    { 10, new DateTime(2024, 1, 10, 15, 0, 0, 0, DateTimeKind.Unspecified), 10, 10 }
                 });
 
             migrationBuilder.InsertData(
@@ -192,6 +187,33 @@ namespace HillarysHairCare.Migrations
                     { 10, false, "Emma Martinez" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Appointments",
+                columns: new[] { "Id", "ApptTime", "CustomerId", "StylistId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 1, 15, 9, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, new DateTime(2024, 1, 16, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, 2 },
+                    { 3, new DateTime(2024, 1, 17, 14, 0, 0, 0, DateTimeKind.Unspecified), 3, 3 },
+                    { 4, new DateTime(2024, 1, 17, 11, 0, 0, 0, DateTimeKind.Unspecified), 4, 4 },
+                    { 5, new DateTime(2024, 1, 5, 13, 0, 0, 0, DateTimeKind.Unspecified), 5, 5 },
+                    { 6, new DateTime(2024, 1, 6, 16, 0, 0, 0, DateTimeKind.Unspecified), 6, 6 },
+                    { 7, new DateTime(2024, 1, 8, 14, 0, 0, 0, DateTimeKind.Unspecified), 7, 7 },
+                    { 8, new DateTime(2024, 1, 10, 9, 0, 0, 0, DateTimeKind.Unspecified), 8, 8 },
+                    { 9, new DateTime(2024, 1, 11, 10, 0, 0, 0, DateTimeKind.Unspecified), 9, 9 },
+                    { 10, new DateTime(2024, 1, 10, 15, 0, 0, 0, DateTimeKind.Unspecified), 10, 10 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_CustomerId",
+                table: "Appointments",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_StylistId",
+                table: "Appointments",
+                column: "StylistId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Services_AppointmentId",
                 table: "Services",
@@ -204,16 +226,16 @@ namespace HillarysHairCare.Migrations
                 name: "AppointmentServices");
 
             migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
                 name: "Services");
 
             migrationBuilder.DropTable(
-                name: "Stylists");
+                name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "Appointments");
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Stylists");
         }
     }
 }

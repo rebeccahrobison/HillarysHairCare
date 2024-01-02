@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HillarysHairCare.Migrations
 {
     [DbContext(typeof(HillarysHairCareDbContext))]
-    [Migration("20240102192816_InitialCreate")]
+    [Migration("20240102210411_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,10 @@ namespace HillarysHairCare.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("StylistId");
 
                     b.ToTable("Appointments");
 
@@ -568,6 +572,25 @@ namespace HillarysHairCare.Migrations
                             Active = false,
                             Name = "Emma Martinez"
                         });
+                });
+
+            modelBuilder.Entity("HillarysHairCare.Models.Appointment", b =>
+                {
+                    b.HasOne("HillarysHairCare.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HillarysHairCare.Models.Stylist", "Stylist")
+                        .WithMany()
+                        .HasForeignKey("StylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Stylist");
                 });
 
             modelBuilder.Entity("HillarysHairCare.Models.Service", b =>

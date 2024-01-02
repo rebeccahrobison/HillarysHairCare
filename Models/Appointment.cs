@@ -9,4 +9,6 @@ public class Appointment
   public int CustomerId { get; set; }
   public List<Service> Services { get; set; }
   public DateTime ApptTime { get; set; }
+  public Stylist Stylist { get; set; }
+  public Customer Customer { get; set; }
 }

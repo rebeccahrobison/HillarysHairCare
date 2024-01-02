@@ -9,4 +9,6 @@ public class AppointmentDTO
   public int CustomerId { get; set; }
   public List<ServiceDTO> Services { get; set; }
   public DateTime ApptTime { get; set; }
+  public StylistDTO Stylist { get; set; }
+  public CustomerDTO Customer { get; set; }
 }
