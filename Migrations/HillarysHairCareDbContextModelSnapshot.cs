@@ -40,6 +40,10 @@ namespace HillarysHairCare.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("StylistId");
+
                     b.ToTable("Appointments");
 
                     b.HasData(
@@ -566,6 +570,25 @@ namespace HillarysHairCare.Migrations
                             Active = false,
                             Name = "Emma Martinez"
                         });
+                });
+
+            modelBuilder.Entity("HillarysHairCare.Models.Appointment", b =>
+                {
+                    b.HasOne("HillarysHairCare.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HillarysHairCare.Models.Stylist", "Stylist")
+                        .WithMany()
+                        .HasForeignKey("StylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Stylist");
                 });
 
             modelBuilder.Entity("HillarysHairCare.Models.Service", b =>

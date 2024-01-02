@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h4 {
+  margin: 20px;
+}
+
+
+
+.appts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.appts-header button {
+  padding: 10px 5px;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.table-container {
+  align-items: center;
+}
+
+table, th, td {
+  border: 1px solid var(--black);
+  border-collapse: collapse;
+  padding: 8px;
+}
+
+th {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+tbody {
+  background-color: var(--white);
+}
+
+.appt-time {
+  background-color: var(--gray);
+}
