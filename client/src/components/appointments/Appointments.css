@@ -49,3 +49,28 @@ tbody {
   color: var(--red);
   font-weight: 600;
 }
+
+.btns-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  padding: 10px;
+  margin: 5px;
+  width: 200px;
+  border-radius: 10px;
+  color: var(--white);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+}
+
+.btn-update {
+  background-color: var(--black);
+}
+
+.btn-cancel {
+  background-color: var(--red);
+}

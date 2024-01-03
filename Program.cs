@@ -96,24 +96,38 @@ app.MapGet("/api/appointments/{id}", (HillarysHairCareDbContext db, int id) =>
         Services = foundServices.Select(s => new ServiceDTO
         {
             Id = s.Id,
-                Name = s.Name,
-                Price = s.Price
+            Name = s.Name,
+            Price = s.Price
         }).ToList(),
         Customer = new CustomerDTO
-            {
-                Id = foundAppointment.Customer.Id,
-                Name = foundAppointment.Customer.Name,
-                Email = foundAppointment.Customer.Email
-            },
-            Stylist = new StylistDTO
-            {
-                Id = foundAppointment.Stylist.Id,
-                Name = foundAppointment.Stylist.Name,
-                Active = foundAppointment.Stylist.Active
-            }
+        {
+            Id = foundAppointment.Customer.Id,
+            Name = foundAppointment.Customer.Name,
+            Email = foundAppointment.Customer.Email
+        },
+        Stylist = new StylistDTO
+        {
+            Id = foundAppointment.Stylist.Id,
+            Name = foundAppointment.Stylist.Name,
+            Active = foundAppointment.Stylist.Active
+        }
     });
 });
 
+// Cancel an appointment
+app.MapDelete("/api/appointments/{id}", (HillarysHairCareDbContext db, int id) =>
+{
+    Appointment foundAppointment = db.Appointments.FirstOrDefault(a => a.Id == id);
+
+    if (foundAppointment == null)
+    {
+        return Results.NotFound();
+    }
+
+    db.Appointments.Remove(foundAppointment);
+    db.SaveChanges();
+    return Results.NoContent();
+});
 
 app.Run();
 
