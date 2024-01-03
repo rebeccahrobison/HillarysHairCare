@@ -38,6 +38,7 @@ export const AppointmentDetails = () => {
                 <div key={`services=${s?.id}`}>{s.name}</div>
               ))}
             </td>
+            <td>${appointment?.totalPrice}</td>
           </tr>
         </tbody>
         
