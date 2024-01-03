@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getAppointments } from "../../data/appointmentsData"
 import "../appointments/Appointments.css"
 import { formatTimestamp } from "../formatTimestamp"
+import { Link } from "react-router-dom"
 
 
 export const AppointmentsList = () => {
@@ -34,7 +35,7 @@ export const AppointmentsList = () => {
         <tbody>
           {appointments.map((a) => (
             <tr key={`appointments-${a?.id}`}>
-              <td className="appt-time">{formatTimestamp(a?.apptTime)}</td>
+              <td className="appt-time"><Link to={`${a.id}`}>{formatTimestamp(a?.apptTime)}</Link></td>
               <td>{a?.stylist.name}</td>
               <td>{a?.customer.name}</td>
             </tr>
