@@ -114,6 +114,33 @@ app.MapGet("/api/appointments/{id}", (HillarysHairCareDbContext db, int id) =>
     });
 });
 
+// Add an appointment
+app.MapPost("/api/appointments", (HillarysHairCareDbContext db, Appointment appointment) =>
+{
+    var apptToAdd = new Appointment{
+        StylistId = appointment.StylistId,
+        CustomerId = appointment.CustomerId,
+        ApptTime = appointment.ApptTime
+    }; 
+
+    db.Appointments.Add(apptToAdd);
+    db.SaveChanges();
+
+    foreach (var service in appointment.Services)
+    {
+        var aService = new AppointmentService
+        {
+            AppointmentId = apptToAdd.Id,
+            ServiceId = service.Id
+        };
+        db.AppointmentServices.Add(aService);
+    }
+
+    db.SaveChanges();
+
+    return Results.Created($"/api/appointments/{appointment.Id}", appointment);
+});
+
 // Cancel an appointment
 app.MapDelete("/api/appointments/{id}", (HillarysHairCareDbContext db, int id) =>
 {
@@ -127,6 +154,47 @@ app.MapDelete("/api/appointments/{id}", (HillarysHairCareDbContext db, int id) =
     db.Appointments.Remove(foundAppointment);
     db.SaveChanges();
     return Results.NoContent();
+});
+
+// Get all Stylists
+app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
+{
+    return db.Stylists.Select(s => new StylistDTO
+    {
+        Id = s.Id,
+        Name = s.Name,
+        Active = s.Active
+    });
+});
+
+// Get all Customers
+app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
+{
+    return db.Customers.Select(c => new CustomerDTO
+    {
+        Id = c.Id,
+        Name = c.Name,
+        Email = c.Email
+    });
+});
+
+// Get all Services
+app.MapGet("/api/services", (HillarysHairCareDbContext db) =>
+{
+    return db.Services.Select(s => new ServiceDTO
+    {
+        Id = s.Id,
+        Name = s.Name,
+        Price = s.Price
+    });
+});
+
+// Get all appointment services
+app.MapPost("/api/appointmentservices", (HillarysHairCareDbContext db, AppointmentService appointmentService) =>
+{
+    db.AppointmentServices.Add(appointmentService);
+    db.SaveChanges();
+    return Results.Created($"/api/appointmentservices/{appointmentService.Id}", appointmentService);
 });
 
 app.Run();

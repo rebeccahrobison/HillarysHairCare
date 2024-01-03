@@ -2,11 +2,12 @@ import { useEffect, useState } from "react"
 import { getAppointments } from "../../data/appointmentsData"
 import "../appointments/Appointments.css"
 import { formatTimestamp } from "../formatTimestamp"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 export const AppointmentsList = () => {
   const [appointments, setAppointments] = useState([])
+  const navigate = useNavigate()
 
   const getAndSetAppointments = () => {
     getAppointments().then(arr => setAppointments(arr))
@@ -16,12 +17,17 @@ export const AppointmentsList = () => {
     getAndSetAppointments()
   }, [])
 
+  const handleAddBtn = (e) => {
+    e.preventDefault()
+
+    navigate("add")
+  }
 
   return (
     <div className="container">
       <div className="appts-header">
         <h4>Appointments</h4>
-        <button>Add Appointment</button>
+        <button className="add-btn" onClick={e => handleAddBtn(e)}>Add Appointment</button>
       </div>
       <div className="table-container">
         <table>

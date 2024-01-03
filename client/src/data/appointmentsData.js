@@ -14,3 +14,13 @@ export const cancelAppointment = (id) => {
     method: "DELETE"
   })
 }
+
+export const postAppointment = (appointment) => {
+  return fetch(`${_apiUrl}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(appointment)
+  })
+}
