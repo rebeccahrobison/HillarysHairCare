@@ -7,3 +7,10 @@ export const getAppointments = () => {
 export const getAppointmentById = (id) => {
   return fetch(`${_apiUrl}/${id}`).then(r => r.json())
 }
+
+export const cancelAppointment = (id) => {
+  console.log(id)
+  return fetch(`${_apiUrl}/${id}`, {
+    method: "DELETE"
+  })
+}
