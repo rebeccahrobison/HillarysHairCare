@@ -11,4 +11,11 @@ public class AppointmentDTO
   public DateTime ApptTime { get; set; }
   public StylistDTO Stylist { get; set; }
   public CustomerDTO Customer { get; set; }
+  public decimal TotalPrice
+  {
+    get
+    {
+      return Services.Sum(s => s.Price);
+    }
+  }
 }
