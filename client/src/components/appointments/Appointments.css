@@ -44,3 +44,8 @@ tbody {
 .appt-time {
   background-color: var(--gray);
 }
+
+.appt-time :hover {
+  color: var(--red);
+  font-weight: 600;
+}
