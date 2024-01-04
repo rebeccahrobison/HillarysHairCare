@@ -264,6 +264,14 @@ app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
             });
 });
 
+// Add a new Customer
+app.MapPost("/api/customers", (HillarysHairCareDbContext db, Customer customer) => 
+{
+    db.Customers.Add(customer);
+    db.SaveChanges();
+    return Results.Created($"/api/stylists/{customer.Id}", customer);
+});
+
 // Get all Services
 app.MapGet("/api/services", (HillarysHairCareDbContext db) =>
 {
