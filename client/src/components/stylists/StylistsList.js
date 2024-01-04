@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getStylists } from "../../data/stylistsData"
+import { deactivateStylist, getStylists } from "../../data/stylistsData"
 import { formatTimestamp } from "../formatTimestamp"
 import { Link } from "react-router-dom"
 
@@ -13,6 +13,12 @@ export const StylistsList = () => {
   useEffect(() => {
     getAndSetStylists()
   }, [])
+
+  const handleRemoveStylistBtn = (e, id) => {
+    e.preventDefault()
+
+    deactivateStylist(id).then(() => getAndSetStylists())
+  }
 
   return (
     <div className="container">
@@ -35,12 +41,12 @@ export const StylistsList = () => {
                 <td>{s?.stylist.name}</td>
                 <td className="appt-time">
                   {s?.appointments.map(a => (
-                  <div className="stylist-appointments"><Link to={`/appointments/${a.id}`}>{formatTimestamp(a?.apptTime)}</Link></div>
+                  <div className="stylist-appointments" key={a.id}><Link to={`/appointments/${a.id}`}>{formatTimestamp(a?.apptTime)}</Link></div>
                   ))}
                 </td>
 
                 {s.stylist.active ?
-                  <td><button className="remove-btn">Remove</button></td>
+                  <td><button className="remove-btn" onClick={e => handleRemoveStylistBtn(e, s.stylist.id)}>Remove</button></td>
                   :
                   <td>Inactive</td>}
               </tr>
