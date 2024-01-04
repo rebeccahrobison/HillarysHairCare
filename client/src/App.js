@@ -6,7 +6,7 @@ function App() {
     <>
       <nav>
         <div className="nav-item">✂️🪮<b><a href="http://localhost:3000/appointments">Hillary's Hair Care</a></b></div>
-        <div className="nav-item">Customers</div>
+        <div className="nav-item"><Link to={"/customers"}>Customers</Link></div>
         <div className="nav-item"><Link to={"/stylists"}>Stylists</Link></div>
       </nav>
       <Outlet />

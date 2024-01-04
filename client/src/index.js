@@ -8,6 +8,7 @@ import { AppointmentDetails } from './components/appointments/AppointmentDetails
 import { AddAppointment } from './components/appointments/AddAppointment';
 import { StylistsList } from './components/stylists/StylistsList';
 import { AddStylist } from './components/stylists/AddStylist';
+import { CustomersList } from './components/customers/CustomersList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,7 +21,7 @@ root.render(
           <Route path="add" element={<AddAppointment />} />
         </Route>
         <Route path="customers">
-
+          <Route index element={<CustomersList />} />
         </Route>
         <Route path="stylists">
           <Route index element={<StylistsList />} />

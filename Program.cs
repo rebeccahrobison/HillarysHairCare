@@ -236,12 +236,32 @@ app.MapPost("/api/stylists", (HillarysHairCareDbContext db, Stylist stylist) =>
 // Get all Customers
 app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
 {
-    return db.Customers.Select(c => new CustomerDTO
-    {
-        Id = c.Id,
-        Name = c.Name,
-        Email = c.Email
-    });
+    return db.Customers
+            .Select(c => new
+            {
+                Customer = new CustomerDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Email = c.Email
+                },
+                Appointments = db.Appointments
+                    .Where(a => a.CustomerId == c.Id)
+                    .Select(a => new AppointmentDTO
+                    {
+                        Id = a.Id,
+                        StylistId = a.StylistId,
+                        CustomerId = a.CustomerId,
+                        ApptTime = a.ApptTime,
+                        Services = a.Services.Select(s => new ServiceDTO
+                        {
+                            Id = s.Id,
+                            Name = s.Name,
+                            Price = s.Price
+                        }).ToList(),
+                    })
+                    .ToList()
+            });
 });
 
 // Get all Services
