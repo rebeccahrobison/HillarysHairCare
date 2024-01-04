@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HillarysHairCare.Migrations
 {
     [DbContext(typeof(HillarysHairCareDbContext))]
-    [Migration("20240102210411_InitialCreate")]
+    [Migration("20240104173809_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,6 +118,13 @@ namespace HillarysHairCare.Migrations
                             ApptTime = new DateTime(2024, 1, 10, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 10,
                             StylistId = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ApptTime = new DateTime(2023, 1, 10, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerId = 10,
+                            StylistId = 9
                         });
                 });
 

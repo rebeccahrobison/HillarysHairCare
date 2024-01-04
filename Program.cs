@@ -156,6 +156,29 @@ app.MapDelete("/api/appointments/{id}", (HillarysHairCareDbContext db, int id) =
     return Results.NoContent();
 });
 
+// Create an Appointment Service
+app.MapPost("/api/appointmentservices", (HillarysHairCareDbContext db, AppointmentService appointmentService) =>
+{
+    db.AppointmentServices.Add(appointmentService);
+    db.SaveChanges();
+    return Results.Created($"/api/appointmentservices/{appointmentService.Id}", appointmentService);
+});
+
+// Delete an Appointment Service
+app.MapDelete("/api/appointmentservices/{id}", (HillarysHairCareDbContext db, int id) =>
+{
+    AppointmentService foundAS = db.AppointmentServices.FirstOrDefault(a => a.Id == id);
+
+    if (foundAS == null)
+    {
+        return Results.NotFound();
+    }
+
+    db.AppointmentServices.Remove(foundAS);
+    db.SaveChanges();
+    return Results.NoContent();
+});
+
 // Get all Stylists
 app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
 {
@@ -190,11 +213,14 @@ app.MapGet("/api/services", (HillarysHairCareDbContext db) =>
 });
 
 // Get all appointment services
-app.MapPost("/api/appointmentservices", (HillarysHairCareDbContext db, AppointmentService appointmentService) =>
+app.MapGet("/api/appointmentservices", (HillarysHairCareDbContext db) =>
 {
-    db.AppointmentServices.Add(appointmentService);
-    db.SaveChanges();
-    return Results.Created($"/api/appointmentservices/{appointmentService.Id}", appointmentService);
+    return db.AppointmentServices.Select(s => new AppointmentServiceDTO
+    {
+        Id = s.Id,
+        AppointmentId = s.AppointmentId,
+        ServiceId = s.ServiceId
+    });
 });
 
 app.Run();
