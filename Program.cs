@@ -117,11 +117,12 @@ app.MapGet("/api/appointments/{id}", (HillarysHairCareDbContext db, int id) =>
 // Add an appointment
 app.MapPost("/api/appointments", (HillarysHairCareDbContext db, Appointment appointment) =>
 {
-    var apptToAdd = new Appointment{
+    var apptToAdd = new Appointment
+    {
         StylistId = appointment.StylistId,
         CustomerId = appointment.CustomerId,
         ApptTime = appointment.ApptTime
-    }; 
+    };
 
     db.Appointments.Add(apptToAdd);
     db.SaveChanges();
@@ -182,12 +183,32 @@ app.MapDelete("/api/appointmentservices/{id}", (HillarysHairCareDbContext db, in
 // Get all Stylists
 app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
 {
-    return db.Stylists.Select(s => new StylistDTO
-    {
-        Id = s.Id,
-        Name = s.Name,
-        Active = s.Active
-    });
+    return db.Stylists
+            .Select(s => new
+            {
+                Stylist = new StylistDTO
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Active = s.Active
+                },
+                Appointments = db.Appointments
+                    .Where(a => a.StylistId == s.Id)
+                    .Select(a => new AppointmentDTO
+                    {
+                        Id = a.Id,
+                        StylistId = a.StylistId,
+                        CustomerId = a.CustomerId,
+                        ApptTime = a.ApptTime,
+                        Services = a.Services.Select(s => new ServiceDTO
+                        {
+                            Id = s.Id,
+                            Name = s.Name,
+                            Price = s.Price
+                        }).ToList(),
+                    })
+                    .ToList()
+            });
 });
 
 // Get all Customers
