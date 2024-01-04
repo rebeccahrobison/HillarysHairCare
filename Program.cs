@@ -225,6 +225,14 @@ app.MapPost("/api/stylists/{id}/deactivate", (HillarysHairCareDbContext db, int 
     return Results.Ok($"{stylistToDeactivate.Name} is deactivated");
 });
 
+// Add a new Stylist
+app.MapPost("/api/stylists", (HillarysHairCareDbContext db, Stylist stylist) => 
+{
+    db.Stylists.Add(stylist);
+    db.SaveChanges();
+    return Results.Created($"/api/stylists/{stylist.Id}", stylist);
+});
+
 // Get all Customers
 app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
 {
