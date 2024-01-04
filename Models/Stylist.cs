@@ -9,4 +9,5 @@ public class Stylist
   public string Name { get; set; }
   [Required]
   public bool Active { get; set; }
+  // public List<Appointment> Appointments { get; set; }
 }

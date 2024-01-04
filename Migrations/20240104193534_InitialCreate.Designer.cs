@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HillarysHairCare.Migrations
 {
     [DbContext(typeof(HillarysHairCareDbContext))]
-    [Migration("20240104173809_InitialCreate")]
+    [Migration("20240104193534_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
