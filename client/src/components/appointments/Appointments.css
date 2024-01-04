@@ -104,6 +104,7 @@ tbody {
   sans-serif;
 }
 
-/* .stylist-appointments {
-  background-color: var(--black);
-} */
+.form-container {
+  display: flex;
+  margin: 10px;
+}

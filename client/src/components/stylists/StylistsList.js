@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { deactivateStylist, getStylists } from "../../data/stylistsData"
 import { formatTimestamp } from "../formatTimestamp"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export const StylistsList = () => {
   const [stylists, setStylists] = useState([])
+  const navigate = useNavigate()
 
   const getAndSetStylists = () => {
     getStylists().then(arr => setStylists(arr))
@@ -20,11 +21,17 @@ export const StylistsList = () => {
     deactivateStylist(id).then(() => getAndSetStylists())
   }
 
+  const handleAddStylistBtn = (e) => {
+    e.preventDefault()
+
+    navigate("/stylists/add")
+  }
+
   return (
     <div className="container">
       <div className="appts-header">
         <h4>Stylists</h4>
-        {/* <button className="add-btn" onClick={e => handleAddBtn(e)}>Add Appointment</button> */}
+        <button className="add-btn" onClick={e => handleAddStylistBtn(e)}>Add Stylist</button>
       </div>
       <div className="table-container">
         <table>
