@@ -44,13 +44,18 @@ export const AddAppointment = () => {
     const formattedMonth = monthIndex < 10 ? `0${monthIndex}` : `${monthIndex}`;
     const formattedDay = day < 10 ? `0${day}` : `${day}`;
     const formattedTime = time.replace(/(\d+):(\d+)(am|pm)/, (_, hours, minutes, period) => {
-      const formattedHours = period === 'pm' && parseInt(hours, 10) !== 12 ? parseInt(hours, 10) + 12 : hours;
+      // const formattedHours = period === 'pm' && parseInt(hours, 10) !== 12 ? parseInt(hours, 10) + 12 : hours;
+      const formattedHours = period === 'pm' && parseInt(hours, 10) !== 12
+      ? `${parseInt(hours, 10) + 12}`.padStart(2, '0')  // Add leading zero and ensure two digits
+      : hours.padStart(2, '0');  // Add leading zero and ensure two digits
       return `${formattedHours}:${minutes}`;
     });
 
     return `${year}-${formattedMonth}-${formattedDay}T${formattedTime}:00`;
   };
-    console.log(formatSelectedDate())
+
+    // console.log(formatSelectedDate())
+
   const handleDateChange = (e) => {
     const { name, value } = e.target
     setSelectedDate((prevDate) => ({...prevDate, [name]: value}))
@@ -83,7 +88,7 @@ export const AddAppointment = () => {
 
     console.log("appt to add", apptToAdd)
 
-    postAppointment(apptToAdd).then(navigate("/appointments"))
+    postAppointment(apptToAdd).then(() => navigate("/appointments"))
   }
 
   return (
@@ -138,7 +143,7 @@ export const AddAppointment = () => {
                   <option value="0">Choose a Stylist</option>
                   {stylists.map(s => {
                     return (
-                      <option value={s.id} key={s.id}>{s.name}</option>
+                      <option value={s.stylist.id} key={s.stylist.id}>{s.stylist.name}</option>
                     )
                   })}
                 </select>
@@ -150,7 +155,7 @@ export const AddAppointment = () => {
                   <option value="0">Choose a Customer</option>
                   {customers.map(c => {
                     return (
-                      <option value={c.id} key={c.id}>{c.name}</option>
+                      <option value={c.customer.id} key={c.customer.id}>{c.customer.name}</option>
                     )
                   })}
                 </select>
