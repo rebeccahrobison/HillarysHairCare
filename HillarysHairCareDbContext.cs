@@ -90,6 +90,13 @@ public class HillarysHairCareDbContext : DbContext
             CustomerId = 10,
             StylistId = 10,
         },
+        new Appointment
+        {
+            Id = 11,
+            ApptTime = new DateTime(2023, 1, 10, 15, 0, 0),
+            CustomerId = 10,
+            StylistId = 9,
+        },
     });
 
     modelBuilder.Entity<AppointmentService>().HasData(new AppointmentService[]

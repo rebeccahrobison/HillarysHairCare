@@ -201,7 +201,8 @@ namespace HillarysHairCare.Migrations
                     { 7, new DateTime(2024, 1, 8, 14, 0, 0, 0, DateTimeKind.Unspecified), 7, 7 },
                     { 8, new DateTime(2024, 1, 10, 9, 0, 0, 0, DateTimeKind.Unspecified), 8, 8 },
                     { 9, new DateTime(2024, 1, 11, 10, 0, 0, 0, DateTimeKind.Unspecified), 9, 9 },
-                    { 10, new DateTime(2024, 1, 10, 15, 0, 0, 0, DateTimeKind.Unspecified), 10, 10 }
+                    { 10, new DateTime(2024, 1, 10, 15, 0, 0, 0, DateTimeKind.Unspecified), 10, 10 },
+                    { 11, new DateTime(2023, 1, 10, 15, 0, 0, 0, DateTimeKind.Unspecified), 10, 9 }
                 });
 
             migrationBuilder.CreateIndex(

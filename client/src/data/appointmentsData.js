@@ -9,7 +9,6 @@ export const getAppointmentById = (id) => {
 }
 
 export const cancelAppointment = (id) => {
-  console.log(id)
   return fetch(`${_apiUrl}/${id}`, {
     method: "DELETE"
   })
@@ -24,3 +23,24 @@ export const postAppointment = (appointment) => {
     body: JSON.stringify(appointment)
   })
 }
+
+export const getAppointmentServices = () => {
+  return fetch(`/api/appointmentservices`).then(res => res.json())
+}
+
+export const postAppointmentService = (appointmentService) => {
+  return fetch(`/api/appointmentservices`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(appointmentService)
+  })
+}
+
+export const deleteAppointmentService = (id) => {
+  return fetch(`/api/appointmentservices/${id}`, {
+    method: "DELETE"
+  })
+}
+
