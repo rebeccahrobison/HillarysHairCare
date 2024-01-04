@@ -211,6 +211,20 @@ app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
             });
 });
 
+// Deactivate a stylist
+app.MapPost("/api/stylists/{id}/deactivate", (HillarysHairCareDbContext db, int id) =>
+{
+    Stylist stylistToDeactivate = db.Stylists.SingleOrDefault(s => s.Id == id);
+    if (stylistToDeactivate == null)
+    {
+        return Results.NotFound();
+    }
+
+    stylistToDeactivate.Active = false;
+    db.SaveChanges();
+    return Results.Ok($"{stylistToDeactivate.Name} is deactivated");
+});
+
 // Get all Customers
 app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
 {
